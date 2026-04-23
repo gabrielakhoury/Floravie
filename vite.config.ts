@@ -6,8 +6,8 @@ import { defineConfig, loadEnv } from 'vite';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   
-  // Detecta se está rodando no GitHub Pages ou Netlify
-  const isGitHubPages = process.env.GITHUB_PAGES === 'true' || env.GITHUB_PAGES === 'true';
+  // Detecta se está rodando no GitHub Pages via variável de ambiente
+  const isGitHubPages = process.env.GITHUB_PAGES === 'true';
   
   return {
     base: isGitHubPages ? '/Floravie/' : './',
