@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "BrandConfig": {
+      "title": "Brand Configuration",
+      "description": "Global settings for the brand application",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "The brand name" },
+        "slogan": { "type": "string", "description": "The brand slogan" },
+        "description": { "type": "string", "description": "The brand description" },
+        "icon": { "type": "string", "description": "Base64 or URL of the brand icon" },
+        "bg": { "type": "string", "description": "Base64 or URL of the background image" },
+        "aboutImg1": { "type": "string", "description": "Base64 or URL of the first about image" },
+        "aboutImg2": { "type": "string", "description": "Base64 or URL of the second about image" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp of last update" }
+      },
+      "required": ["name"]
+    }
+  },
+  "firestore": {
+    "configs/brand": {
+      "schema": "BrandConfig",
+      "description": "Single document containing general site configuration"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEditor() {
+      return isSignedIn() && (
+        request.auth.token.email == "gabriela10840@edu.sebrae.com.br" &&
+        request.auth.token.email_verified == true
+      );
+    }
+
+    function isValidSetting(data) {
+      return data.value is string && data.value.size() <= 2000000;
+    }
+
+    match /brandSettings/{settingId} {
+      allow read: if true;
+      allow write: if isEditor() && (
+        // Se for uma configuração de texto, validar tamanho menor
+        (settingId in ['name', 'slogan', 'description'] ? request.resource.data.value.size() <= 5000 : true) &&
+        isValidSetting(request.resource.data)
+      );
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sour+Gummy:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-playful: "Sour Gummy", cursive;
+  
+  --color-bg: #F2EFEB;
+  --color-surface: #ffffff;
+  --color-border: #e0d9d5;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-accent: #EA5E86;
+  --color-accent-hover: #d14d74;
+}
+
+@layer base {
+  body {
+    @apply antialiased bg-bg text-text-primary font-sans;
+  }
+}
+
+/* Custom scrollbar for horizontal categories */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.font-opensauce {
+  text-transform: uppercase;
+  letter-spacing: 0.132em;
+}
