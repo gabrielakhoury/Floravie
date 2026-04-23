@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages and Netlify
 
 on:
   push:
@@ -24,15 +24,17 @@ jobs:
       - name: Install dependencies
         run: npm install --include=dev
 
-      - name: Build
+      # Build para GitHub Pages (base: /Floravie/)
+      - name: Build for GitHub Pages
         run: npm run build
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_PAGES: 'true'
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload artifact
+      - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
@@ -40,3 +42,23 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Build para Netlify (base: ./)
+      - name: Rebuild for Netlify
+        run: |
+          rm -rf dist
+          npm run build
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # GITHUB_PAGES não está definido, então base será './'
+
+      # Deploy para Netlify (opcional - se quiser deploy via Actions)
+      # Descomente se quiser deploy manual via Actions ao invés do hook automático
+      # - name: Deploy to Netlify
+      #   uses: nwtgck/actions-netlify@v3
+      #   with:
+      #     publish-dir: './dist'
+      #     production-deploy: true
+      #   env:
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
